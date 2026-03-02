@@ -78,6 +78,25 @@ export default function LoginForm() {
       <Button type="submit" loading={loading} className="w-full" size="lg">
         Log In
       </Button>
+
+      {/* Demo Credentials */}
+      <div className="bg-cw-bg/60 border border-cw-border rounded-lg p-4 space-y-2">
+        <p className="text-xs font-semibold text-cw-text-muted uppercase tracking-wider mb-2">Demo Credentials</p>
+        <div className="flex items-center justify-between text-sm">
+          <div>
+            <span className="text-cw-text-secondary">Admin: </span>
+            <span className="text-white font-medium">admin@cinewave.com</span>
+          </div>
+          <span className="text-cw-text-muted text-xs">Admin@123</span>
+        </div>
+        <div className="flex items-center justify-between text-sm">
+          <div>
+            <span className="text-cw-text-secondary">User: </span>
+            <span className="text-white font-medium">test@cinewave.com</span>
+          </div>
+          <span className="text-cw-text-muted text-xs">Test@123</span>
+        </div>
+      </div>
     </form>
   );
 }
