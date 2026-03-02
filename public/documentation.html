@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineWave — User Documentation</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --bg-secondary: #1a1a2e;
+      --red: #e50914;
+      --red-dark: #b20710;
+      --text: #e5e5e5;
+      --text-muted: #a3a3a3;
+      --text-secondary: #737373;
+      --border: #2a2a2a;
+      --gradient: linear-gradient(135deg, #e50914 0%, #b20710 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: var(--red); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff4757; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, rgba(229,9,20,0.15) 0%, var(--bg) 100%);
+      padding: 80px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(229,9,20,0.08) 0%, transparent 50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 8px;
+      color: var(--red);
+      margin-bottom: 12px;
+      position: relative;
+      text-shadow: 0 0 40px rgba(229,9,20,0.3);
+    }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; position: relative; }
+    .badge {
+      display: inline-block;
+      background: var(--gradient);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    /* Navigation */
+    .nav {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-link {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: white;
+      background: rgba(229,9,20,0.1);
+      border-color: var(--red);
+    }
+
+    /* Sections */
+    section { padding: 50px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    h3 {
+      font-size: 1.2rem;
+      color: white;
+      margin: 24px 0 12px;
+      padding-left: 16px;
+      border-left: 3px solid var(--red);
+    }
+    p { margin-bottom: 12px; color: var(--text-muted); }
+    ul, ol { margin: 12px 0 20px 24px; color: var(--text-muted); }
+    li { margin-bottom: 8px; }
+    li strong { color: white; }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(229,9,20,0.3); }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .mini-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .mini-card:hover { transform: translateY(-2px); border-color: var(--red); }
+    .mini-card .emoji { font-size: 2rem; margin-bottom: 8px; }
+    .mini-card h4 { color: white; margin-bottom: 4px; font-size: 1rem; }
+    .mini-card p { font-size: 0.85rem; margin: 0; }
+
+    /* Steps */
+    .steps { counter-reset: step; }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .step-num {
+      counter-increment: step;
+      width: 36px;
+      height: 36px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      color: white;
+    }
+    .step-num::before { content: counter(step); }
+    .step-content h4 { color: white; margin-bottom: 4px; }
+    .step-content p { font-size: 0.9rem; margin: 0; }
+
+    /* Code blocks */
+    code {
+      background: rgba(229,9,20,0.1);
+      color: var(--red);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    pre {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: white; font-weight: 600; background: var(--bg-secondary); }
+    td { color: var(--text-muted); }
+    tr:hover td { color: var(--text); }
+
+    /* Alerts */
+    .alert {
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .alert-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); }
+    .alert-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); }
+    .alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); }
+    .alert .emoji { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    footer .brand { color: var(--red); font-weight: 800; letter-spacing: 3px; }
+
+    /* Scroll animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.2rem; letter-spacing: 4px; }
+      h2 { font-size: 1.4rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <h1>CINEWAVE</h1>
+      <p>Your Ultimate Streaming Platform — User Guide</p>
+      <div class="badge">User Documentation</div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#getting-started" class="nav-link active">Getting Started</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#account" class="nav-link">Account</a>
+        <a href="#browsing" class="nav-link">Browsing</a>
+        <a href="#watching" class="nav-link">Watching</a>
+        <a href="#profiles" class="nav-link">Profiles</a>
+        <a href="#subscription" class="nav-link">Subscription</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Getting Started -->
+    <section id="getting-started" class="fade-in">
+      <h2><span class="icon">🚀</span> Getting Started</h2>
+      <p>Welcome to CineWave! Follow these simple steps to start streaming your favorite movies and series.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Create an Account</h4>
+            <p>Visit the website and click <strong>Register</strong>. Enter your name, email, and password. You can also sign up with Google for quick access.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Verify Your Email</h4>
+            <p>Check your inbox for a verification email from CineWave. Click the link to verify your account.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Choose a Subscription Plan</h4>
+            <p>Browse available plans (Basic, Standard, Premium) and select one that fits your needs. New users get a free trial!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Start Watching</h4>
+            <p>Browse the catalog, pick a movie or series, and enjoy seamless streaming!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="fade-in">
+      <h2><span class="icon">✨</span> Features</h2>
+      <div class="card-grid">
+        <div class="mini-card">
+          <div class="emoji">🎬</div>
+          <h4>Movies & Series</h4>
+          <p>Thousands of movies and series across genres — action, drama, thriller, comedy, and more.</p>
+        </div>
+        <div class="mini-card">
+          <div class="emoji">🔍</div>
+          <h4>Smart Search</h4>
+          <p>Find content instantly with real-time search by title, genre, or actor name.</p>
+        </div>
+        <div class="mini-card">
+          <div class="emoji">👤</div>
+          <h4>Multiple Profiles</h4>
+          <p>Create up to 5 profiles per account with personalized avatars and watchlists.</p>
+        </div>
+        <div class="mini-card">
+          <div class="emoji">📋</div>
+          <h4>My List</h4>
+          <p>Save movies and series to your personal watchlist for easy access later.</p>
+        </div>
+        <div class="mini-card">
+          <div class="emoji">📱</div>
+          <h4>Responsive Design</h4>
+          <p>Watch on any device — desktop, tablet, or mobile. Fully responsive layout.</p>
+        </div>
+        <div class="mini-card">
+          <div class="emoji">🌍</div>
+          <h4>Multi-Language</h4>
+          <p>Content from around the world — Korean dramas, Turkish series, Hindi films, and more.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Account -->
+    <section id="account" class="fade-in">
+      <h2><span class="icon">👤</span> Account Management</h2>
+
+      <h3>Registration</h3>
+      <div class="card">
+        <p>Create an account using one of these methods:</p>
+        <ul>
+          <li><strong>Email & Password</strong> — Fill in the registration form with your details</li>
+          <li><strong>Google Sign-In</strong> — One-click sign-up using your Google account</li>
+          <li><strong>Phone Number</strong> — Sign in with your phone number via OTP verification</li>
+        </ul>
+      </div>
+
+      <h3>Login</h3>
+      <div class="card">
+        <p>Log in with your registered email and password, or use Google/Phone sign-in.</p>
+        <div class="alert alert-info">
+          <span class="emoji">💡</span>
+          <span>Use the <strong>eye icon</strong> next to the password field to show/hide your password while typing.</span>
+        </div>
+      </div>
+
+      <h3>Forgot Password</h3>
+      <div class="card">
+        <ol>
+          <li>Click <strong>"Forgot Password"</strong> on the login page</li>
+          <li>Enter your registered email address</li>
+          <li>Check your inbox for the password reset link</li>
+          <li>Click the link and set a new password</li>
+        </ol>
+      </div>
+
+      <h3>Account Settings</h3>
+      <div class="card">
+        <p>Visit <code>/account</code> to manage your account:</p>
+        <ul>
+          <li>View your subscription status and plan details</li>
+          <li>Manage payment information</li>
+          <li>Update account settings</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Browsing -->
+    <section id="browsing" class="fade-in">
+      <h2><span class="icon">🎯</span> Browsing Content</h2>
+
+      <h3>Home Page</h3>
+      <div class="card">
+        <p>The home page features a hero banner with trending content, plus curated rows:</p>
+        <ul>
+          <li><strong>Trending Now</strong> — Most popular content across the platform</li>
+          <li><strong>New Releases</strong> — Recently added movies and series</li>
+          <li><strong>Featured</strong> — Editor's picks and recommended content</li>
+          <li><strong>Genre Rows</strong> — Browse by genre (Action, Drama, Comedy, etc.)</li>
+        </ul>
+      </div>
+
+      <h3>Browse Page</h3>
+      <div class="card">
+        <p>Visit <code>/browse</code> to explore the full catalog:</p>
+        <ul>
+          <li>Filter by <strong>genre</strong> — Click genre tabs at the top</li>
+          <li>Filter by <strong>type</strong> — Movies, Series, Documentaries</li>
+          <li>Infinite scroll — More content loads as you scroll down</li>
+        </ul>
+      </div>
+
+      <h3>Search</h3>
+      <div class="card">
+        <p>Use the search icon in the navigation bar to search:</p>
+        <ul>
+          <li>Search by <strong>title</strong> — Type the movie or series name</li>
+          <li>Search by <strong>actor</strong> — Find content featuring specific actors</li>
+          <li><strong>Real-time results</strong> — Results appear as you type</li>
+        </ul>
+      </div>
+
+      <h3>Movies & Series Pages</h3>
+      <div class="card">
+        <p>Dedicated pages for browsing only movies (<code>/movies</code>) or only series (<code>/series</code>).</p>
+      </div>
+    </section>
+
+    <!-- Watching -->
+    <section id="watching" class="fade-in">
+      <h2><span class="icon">▶️</span> Watching Content</h2>
+
+      <h3>Content Details</h3>
+      <div class="card">
+        <p>Click on any movie or series to see its details page:</p>
+        <ul>
+          <li>Overview, cast, director, studio, and genre info</li>
+          <li>IMDB rating and user reviews</li>
+          <li>Trailer preview (auto-plays in the background)</li>
+          <li>"More Like This" — Similar content recommendations</li>
+        </ul>
+      </div>
+
+      <h3>Video Player</h3>
+      <div class="card">
+        <p>The video player supports:</p>
+        <ul>
+          <li><strong>Play/Pause</strong> — Click the video or use the control bar</li>
+          <li><strong>Full Screen</strong> — Click the fullscreen button or double-click</li>
+          <li><strong>Volume Control</strong> — Adjust with the volume slider</li>
+          <li><strong>Progress Tracking</strong> — Your watch progress is automatically saved</li>
+        </ul>
+        <div class="alert alert-info">
+          <span class="emoji">📺</span>
+          <span>For series, the episode list appears on the right side. Select any episode to watch. Switch between seasons using the season tabs.</span>
+        </div>
+      </div>
+
+      <h3>Watch Requirements</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Status</th><th>What You See</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Not Logged In</td><td>Trailer preview + Login/Register prompt</td></tr>
+            <tr><td>No Subscription</td><td>Trailer preview + "View Plans" prompt</td></tr>
+            <tr><td>Active Subscription</td><td>Full movie/episode playback</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Profiles -->
+    <section id="profiles" class="fade-in">
+      <h2><span class="icon">👥</span> Profiles</h2>
+
+      <div class="card">
+        <p>CineWave supports multiple profiles per account, perfect for families.</p>
+        <ul>
+          <li><strong>Up to 5 profiles</strong> per account</li>
+          <li><strong>Custom avatars</strong> — Choose from a variety of avatar options</li>
+          <li><strong>Personal watchlist</strong> — Each profile has its own "My List"</li>
+          <li><strong>Watch history</strong> — Progress is tracked per profile</li>
+        </ul>
+      </div>
+
+      <h3>Managing Profiles</h3>
+      <div class="card">
+        <ol>
+          <li>Go to <code>/profiles</code></li>
+          <li>Click <strong>"Add Profile"</strong> to create a new one</li>
+          <li>Set a name and choose an avatar</li>
+          <li>Click on any profile to switch to it</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- My List -->
+    <section id="mylist" class="fade-in">
+      <h2><span class="icon">📋</span> My List (Watchlist)</h2>
+
+      <div class="card">
+        <p>Save content to watch later:</p>
+        <ol>
+          <li>Browse any movie or series</li>
+          <li>Click the <strong>+ (Add to My List)</strong> button</li>
+          <li>Access your saved items at <code>/my-list</code></li>
+          <li>Click the <strong>✓ (Remove)</strong> button to remove from list</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Subscription -->
+    <section id="subscription" class="fade-in">
+      <h2><span class="icon">💳</span> Subscription & Payment</h2>
+
+      <h3>Available Plans</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Plan</th><th>Features</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Basic</strong></td><td>SD quality, 1 device, limited content</td></tr>
+            <tr><td><strong>Standard</strong></td><td>HD quality, 2 devices, full catalog</td></tr>
+            <tr><td><strong>Premium</strong></td><td>4K quality, 4 devices, full catalog + early access</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>How to Subscribe</h3>
+      <div class="card">
+        <ol>
+          <li>Go to <code>/subscribe</code> or <code>/subscription</code></li>
+          <li>Choose a plan</li>
+          <li>Complete payment via SSLCommerz (supports cards, mobile banking, etc.)</li>
+          <li>Your subscription activates immediately</li>
+        </ol>
+        <div class="alert alert-success">
+          <span class="emoji">🎉</span>
+          <span><strong>Free Trial:</strong> New users get a free trial period to explore the platform!</span>
+        </div>
+      </div>
+
+      <h3>Managing Subscription</h3>
+      <div class="card">
+        <p>Visit <code>/subscription</code> to:</p>
+        <ul>
+          <li>View your current plan and expiry date</li>
+          <li>Upgrade or change your plan</li>
+          <li>View payment history</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="fade-in">
+      <h2><span class="icon">❓</span> Frequently Asked Questions</h2>
+
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">How do I cancel my subscription?</h4>
+        <p>Go to Account → Subscription and click "Cancel". Your access continues until the end of the billing period.</p>
+      </div>
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">Can I watch on multiple devices?</h4>
+        <p>Yes! The number of simultaneous devices depends on your plan — Basic (1), Standard (2), Premium (4).</p>
+      </div>
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">Why can't I watch a movie/series?</h4>
+        <p>You need an active subscription. If you see a "View Plans" message, your subscription may have expired.</p>
+      </div>
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">How do I change my password?</h4>
+        <p>Go to the login page → Click "Forgot Password" → Enter your email → Follow the reset link in your inbox.</p>
+      </div>
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">Is my watch progress saved?</h4>
+        <p>Yes! CineWave automatically saves your progress every 30 seconds. Resume watching from where you left off.</p>
+      </div>
+      <div class="card">
+        <h4 style="color: white; margin-bottom: 8px;">Can I download content for offline viewing?</h4>
+        <p>Offline downloads are not available currently. Content is streamed directly in your browser.</p>
+      </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section id="shortcuts" class="fade-in">
+      <h2><span class="icon">⌨️</span> Tips & Shortcuts</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Action</th><th>How</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Search</td><td>Click the search icon in the top navigation bar</td></tr>
+            <tr><td>Full Screen</td><td>Click the fullscreen button on the video player</td></tr>
+            <tr><td>Switch Profile</td><td>Click your avatar in the navigation → "Switch Profile"</td></tr>
+            <tr><td>Add to Watchlist</td><td>Click the "+" button on any content card or details page</td></tr>
+            <tr><td>Change Language</td><td>Use the language selector in the navigation bar</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="brand">CINEWAVE</span>
+    <p style="margin-top: 8px;">
+      &copy; <script>document.write(new Date().getFullYear())</script> CineWave. Built by
+      <a href="https://github.com/md-asif-iqbal">Asif Iqbal</a>
+    </p>
+  </footer>
+
+  <!-- Scroll Animation Script -->
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach((section) => {
+        const top = section.offsetTop - 100;
+        if (scrollY >= top) current = section.getAttribute('id');
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "name": "cinewave",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "node scripts/seed.js",
+    "seed:force": "node scripts/seed.js --force",
+    "seed:clear": "node scripts/clearDB.js",
+    "seed:users": "node scripts/seedUsers.js",
+    "seed:tehran": "node scripts/seedTehran.js"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "axios": "^1.13.5",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "firebase": "^12.9.0",
+    "framer-motion": "^12.34.3",
+    "lucide-react": "^0.575.0",
+    "mongoose": "^9.2.2",
+    "nanoid": "^3.3.11",
+    "next": "14.2.35",
+    "next-auth": "^4.24.13",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.1",
+    "plyr-react": "^6.0.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.71.2",
+    "recharts": "^3.7.0",
+    "sslcommerz-lts": "^1.2.0",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "dotenv": "^17.3.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "tailwind.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
