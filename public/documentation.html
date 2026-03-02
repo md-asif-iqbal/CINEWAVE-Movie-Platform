@@ -298,6 +298,7 @@
         <a href="#watching" class="nav-link">Watching</a>
         <a href="#profiles" class="nav-link">Profiles</a>
         <a href="#subscription" class="nav-link">Subscription</a>
+        <a href="#hosting" class="nav-link">Hosting</a>
         <a href="#faq" class="nav-link">FAQ</a>
       </div>
     </div>
@@ -588,6 +589,120 @@
           <li>Upgrade or change your plan</li>
           <li>View payment history</li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Hosting & Deployment -->
+    <section id="hosting" class="fade-in">
+      <h2><span class="icon">🌐</span> Hosting & Deployment</h2>
+      <p>CineWave can be deployed to <strong>Vercel</strong> for free with full server-side rendering support.</p>
+
+      <h3>Prerequisites</h3>
+      <div class="card">
+        <ul>
+          <li><strong>GitHub Account</strong> — Push your code to a GitHub repository</li>
+          <li><strong>Vercel Account</strong> — Sign up free at <a href="https://vercel.com" target="_blank">vercel.com</a></li>
+          <li><strong>MongoDB Atlas</strong> — Free M0 cluster at <a href="https://mongodb.com/atlas" target="_blank">mongodb.com/atlas</a></li>
+          <li><strong>Cloudinary</strong> — Free tier at <a href="https://cloudinary.com" target="_blank">cloudinary.com</a></li>
+          <li><strong>Google Cloud Console</strong> — For OAuth credentials</li>
+        </ul>
+      </div>
+
+      <h3>Deploy to Vercel</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Push Code to GitHub</h4>
+            <p>Push your CineWave project to a GitHub repository. Make sure <code>.env.local</code> is in <code>.gitignore</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Import Project on Vercel</h4>
+            <p>Go to <a href="https://vercel.com/new" target="_blank">vercel.com/new</a> → Click <strong>"Import Git Repository"</strong> → Select your CineWave repo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Configure Environment Variables</h4>
+            <p>In Vercel project settings → <strong>Environment Variables</strong>, add all the variables listed in the table below.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Deploy</h4>
+            <p>Click <strong>Deploy</strong>. Vercel will build and deploy automatically. You'll get a URL like <code>your-app.vercel.app</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Post-Deploy Setup</h4>
+            <p>Update <code>NEXTAUTH_URL</code> and <code>NEXT_PUBLIC_APP_URL</code> to your Vercel domain. Add the Vercel URL to Google OAuth redirect URIs.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Required Environment Variables</h3>
+      <div class="card" style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr><th>Variable</th><th>Description</th><th>Where to Get</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>MONGODB_URI</code></td><td>MongoDB Atlas connection string</td><td><a href="https://mongodb.com/atlas" target="_blank">MongoDB Atlas</a> → Connect → Drivers</td></tr>
+            <tr><td><code>NEXTAUTH_URL</code></td><td>Your deployed app URL</td><td>Your Vercel domain (e.g. https://cinewave.vercel.app)</td></tr>
+            <tr><td><code>NEXTAUTH_SECRET</code></td><td>Random secret key</td><td>Run: <code>openssl rand -base64 32</code></td></tr>
+            <tr><td><code>GOOGLE_CLIENT_ID</code></td><td>Google OAuth Client ID</td><td><a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a> → Credentials</td></tr>
+            <tr><td><code>GOOGLE_CLIENT_SECRET</code></td><td>Google OAuth Client Secret</td><td>Same as above</td></tr>
+            <tr><td><code>CLOUDINARY_CLOUD_NAME</code></td><td>Cloudinary cloud name</td><td><a href="https://cloudinary.com" target="_blank">Cloudinary</a> → Dashboard</td></tr>
+            <tr><td><code>CLOUDINARY_API_KEY</code></td><td>Cloudinary API key</td><td>Cloudinary Dashboard</td></tr>
+            <tr><td><code>CLOUDINARY_API_SECRET</code></td><td>Cloudinary API secret</td><td>Cloudinary Dashboard</td></tr>
+            <tr><td><code>NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME</code></td><td>Public Cloudinary name</td><td>Same value as CLOUDINARY_CLOUD_NAME</td></tr>
+            <tr><td><code>NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET</code></td><td>Unsigned upload preset</td><td>Cloudinary → Settings → Upload → Add preset</td></tr>
+            <tr><td><code>SSLCOMMERZ_STORE_ID</code></td><td>Payment store ID</td><td><a href="https://developer.sslcommerz.com" target="_blank">SSLCommerz</a> → Sandbox</td></tr>
+            <tr><td><code>SSLCOMMERZ_STORE_PASSWORD</code></td><td>Payment store password</td><td>SSLCommerz Sandbox dashboard</td></tr>
+            <tr><td><code>SSLCOMMERZ_IS_LIVE</code></td><td><code>false</code> for testing, <code>true</code> for production</td><td>Set manually</td></tr>
+            <tr><td><code>EMAIL_HOST</code></td><td>SMTP server host</td><td><code>smtp.gmail.com</code> for Gmail</td></tr>
+            <tr><td><code>EMAIL_PORT</code></td><td>SMTP port</td><td><code>587</code> for Gmail</td></tr>
+            <tr><td><code>EMAIL_USER</code></td><td>Email address for sending</td><td>Your Gmail address</td></tr>
+            <tr><td><code>EMAIL_PASS</code></td><td>Email app password</td><td>Google Account → Security → App Passwords</td></tr>
+            <tr><td><code>EMAIL_FROM</code></td><td>Sender display name</td><td>e.g. <code>CineWave &lt;you@gmail.com&gt;</code></td></tr>
+            <tr><td><code>NEXT_PUBLIC_APP_URL</code></td><td>Public app URL</td><td>Your Vercel domain</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Post-Deployment Checklist</h3>
+      <div class="card">
+        <ol>
+          <li><strong>MongoDB Atlas</strong> → Network Access → Add <code>0.0.0.0/0</code> to allow Vercel's dynamic IPs</li>
+          <li><strong>Google Cloud Console</strong> → Credentials → Add <code>https://your-app.vercel.app/api/auth/callback/google</code> to Authorized Redirect URIs</li>
+          <li><strong>Cloudinary</strong> → Settings → Upload → Ensure your unsigned preset allows uploads from your Vercel domain</li>
+          <li><strong>SSLCommerz</strong> → Update success/fail/cancel URLs to your Vercel domain</li>
+          <li><strong>Update env vars</strong> → Set <code>NEXTAUTH_URL</code> and <code>NEXT_PUBLIC_APP_URL</code> to your Vercel domain</li>
+          <li><strong>Redeploy</strong> → After changing env vars, trigger a redeployment from Vercel dashboard</li>
+        </ol>
+        <div class="alert alert-warn">
+          <span class="emoji">⚠️</span>
+          <span>Never commit <code>.env.local</code> to Git! It contains sensitive credentials. Use <code>.env.local.example</code> as a template.</span>
+        </div>
+      </div>
+
+      <h3>Custom Domain (Optional)</h3>
+      <div class="card">
+        <p>To add a custom domain:</p>
+        <ol>
+          <li>Vercel → Project Settings → Domains</li>
+          <li>Add your domain (e.g. <code>cinewave.com</code>)</li>
+          <li>Configure DNS records as instructed by Vercel</li>
+          <li>Update <code>NEXTAUTH_URL</code> and <code>NEXT_PUBLIC_APP_URL</code> to the custom domain</li>
+          <li>Update Google OAuth redirect URIs to use the custom domain</li>
+        </ol>
       </div>
     </section>
 
